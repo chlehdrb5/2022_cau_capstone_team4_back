@@ -1,5 +1,13 @@
 from django.shortcuts import render
+from .models import Post
+from .serializers import PostSerializer
+from rest_framework import viewsets
 
+class PostViewSet(viewsets.ModelViewSet):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+'''
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -48,3 +56,4 @@ class PostDetail(APIView):
         post = self.get_object(pk)
         post.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+'''
