@@ -13,9 +13,9 @@ class UserManager(BaseUserManager):
         if not email:
             raise ValueError('이메일을 입력해야 합니다.')
         user = self.model(
-            name = name,
-            username = username,
-            email = self.normalize_email(email)
+            name=name,
+            username=username,
+            email=self.normalize_email(email)
         )
         user.set_password(password)
         user.save(using=self.db)
@@ -23,12 +23,13 @@ class UserManager(BaseUserManager):
 
     def create_superuser(self, name, username, email, password=None):
         user = self.create_user(
-            name = name,
-            username = username,
-            email = self.normalize_email(email),
-            password = password
+            name=name,
+            username=username,
+            email=self.normalize_email(email),
+            password=password
         )
         user.is_admin = True
+        user.is_staff = True
         user.save(using=self.db)
         return user
 
@@ -41,6 +42,20 @@ class User(AbstractBaseUser):
 
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
+
+    @property
+    def is_superuser(self):
+        return self.is_admin
+
+    @property
+    def is_staff(self):
+        return self.is_admin
+
+    def has_perm(self, perm, obj=None):
+        return self.is_admin
+
+    def has_module_perms(self, app_label):
+        return self.is_admin
 
     objects = UserManager()
 
