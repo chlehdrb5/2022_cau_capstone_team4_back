@@ -137,5 +137,6 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+        'paint_int_prj.permissions.IsOwnerOrReadOnly',
     ],
 }
