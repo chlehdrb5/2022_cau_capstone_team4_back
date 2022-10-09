@@ -3,7 +3,7 @@ from .models import Answer
 
 
 class AnswerSerializer(serializers.ModelSerializer):
-    # author = serializers.ReadOnlyField(source='author.name')
+    author = serializers.ReadOnlyField(source='author.name')
 
     class Meta:
         model = Answer

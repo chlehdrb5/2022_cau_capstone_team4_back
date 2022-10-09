@@ -10,3 +10,6 @@ class Answer(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     # file_id = models.ForeignKey(Img_file, null=False, on_delete=models.SET_NULL)
+
+    def __str__(self):
+        return f'{self.pk}'
