@@ -9,6 +9,8 @@ class Post(models.Model):
     content = models.TextField()
 
     head_image = models.ImageField(upload_to='post/images/%Y/%m/%d/', blank=True)
+    file_upload = models.FileField(upload_to='post/files/%Y/%m/%d/', blank=True)
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
