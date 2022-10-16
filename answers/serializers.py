@@ -3,8 +3,12 @@ from .models import Answer
 
 
 class AnswerSerializer(serializers.ModelSerializer):
-    # author = serializers.ReadOnlyField(source='author.name')
+    author = serializers.ReadOnlyField(source='author.name')
+    # like_count = serializers.SerializerMethodField()
 
     class Meta:
         model = Answer
-        fields = ('id', 'content', 'author', 'created_at', 'updated_at')
+        fields = ('id', 'post', 'content', 'author', 'created_at', 'updated_at', 'selected', 'like_users')
+
+    # def get_like_count(self, obj):
+    #     return obj.like_users.count
