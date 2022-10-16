@@ -12,6 +12,9 @@ urlpatterns = [
         'put': 'update',
         'delete': 'destroy'
     })),
+    path('<int:pk>/like/', AnswerViewSet.as_view(actions={
+        'get': 'like',
+    })),
 ]
 
 # urlpatterns = format_suffix_patterns(urlpatterns)

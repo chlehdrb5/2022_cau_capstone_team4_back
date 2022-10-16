@@ -57,3 +57,19 @@ class AnswerViewSet(ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
+
+    def like(self, request, *args, **kwargs):
+        answer = self.get_object()
+        if request.user.is_authenticated:
+            # if request.user.is_authenticated # 현재 로그인 한 사용자만 like 사용가능하도록 setting되어있음
+
+            if answer.like_users.filter(pk=request.user.pk).exists():
+                # 이미 해당 answer에 좋아요를 누른 경우
+                answer.like_users.remove(request.user)
+            else:
+                # 좋아요를 누르면 추가
+                answer.like_users.add(request.user)
+            answer.save()
+
+        return Response({"like_count": answer.like_users.count()})
+        
