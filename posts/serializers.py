@@ -1,8 +1,17 @@
 from rest_framework import serializers
-from .models import Post
+from .models import Post, Tag
 
 
 class PostSerializer(serializers.ModelSerializer):
+    author = serializers.ReadOnlyField(source='author.name')
+
     class Meta:
         model = Post
-        fields = ('id', 'title', 'content', 'created_at', 'updated_at')
+        fields = ('id', 'title', 'content', 'tag', 'head_image', 'file_upload', 'author', 'created_at', 'updated_at')
+
+
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = ('name', )
+
