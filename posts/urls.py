@@ -1,5 +1,6 @@
 from django.urls import path
-from .views import PostViewSet
+
+from .views import PostViewSet, TagViewSet
 
 post_list = PostViewSet.as_view({
     'get': 'list',
@@ -12,9 +13,14 @@ post_detail = PostViewSet.as_view({
     'delete': 'destroy'
 })
 
+tag_list = TagViewSet.as_view({
+    'get': 'list'
+})
+
 urlpatterns = [
     path('', post_list),
     path('<int:pk>/', post_detail),
+    path('tag/', tag_list),
 ]
 
 '''
