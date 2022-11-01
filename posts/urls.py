@@ -1,4 +1,6 @@
 from django.urls import path
+
+from comments.views import PostCommentViewSet
 from .views import PostViewSet
 
 post_list = PostViewSet.as_view({
@@ -15,6 +17,15 @@ post_detail = PostViewSet.as_view({
 urlpatterns = [
     path('', post_list),
     path('<int:pk>/', post_detail),
+    path('<int:post_pk>/comment/', PostCommentViewSet.as_view(actions={
+        'get': 'list',
+        'post': 'create'
+    })),
+    path('<int:post_pk>/comment/<int:comment_pk>/', PostCommentViewSet.as_view(actions={
+        'get': 'retrieve',
+        'put': 'update',
+        'delete': 'destroy'
+    })),
 ]
 
 '''
