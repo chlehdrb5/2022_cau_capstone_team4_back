@@ -11,7 +11,7 @@ class Answer(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
-    like_users = models.ManyToManyField(User, related_name='like_answers')
+    like_users = models.ManyToManyField(User, null=True, blank=True, related_name='like_answers')
     selected = models.BooleanField(default=False)
     # file_id = models.ForeignKey(Img_file, null=False, on_delete=models.SET_NULL)
 
