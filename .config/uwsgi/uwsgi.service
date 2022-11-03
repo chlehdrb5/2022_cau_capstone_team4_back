@@ -1,0 +1,15 @@
+[Unit]
+Description=uWSGI service
+After=syslog.target
+
+[Service]
+ExecStart=/srv/2022_cau_capstone_team4_back/venv/bin/uwsgi -i /srv/2022_cau_capstone_team4_back/.config/uwsgi/paint_int_prj.ini
+
+Restart=always
+KillSignal=SIGQUIT
+Type=notify
+StandardError=syslog
+NotifyAccess=all
+
+[Install]
+WantedBy=multi-user.target
