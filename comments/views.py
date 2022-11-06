@@ -12,9 +12,6 @@ class CommentViewSet(ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
 
-    def perform_create(self, serializer):
-        serializer.save(author=self.request.user)
-
     def get_queryset(self):
         if 'answer_pk' in self.kwargs:
             answer_pk = self.kwargs['answer_pk']
