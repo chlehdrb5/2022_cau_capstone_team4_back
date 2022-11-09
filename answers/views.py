@@ -58,6 +58,18 @@ class AnswerViewSet(ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        serializer_data_ = dict(serializer.data)
+        serializer_data_["is_liked"] = False
+        answer = self.get_object()
+        if request.user.is_authenticated:
+            if answer.like_users.filter(pk=request.user.pk).exists():
+                serializer_data_["is_liked"] = True
+        print(serializer_data_)
+        return Response(serializer_data_)
+
     def like(self, request, *args, **kwargs):
         answer = self.get_object()
         if request.user.is_authenticated:
