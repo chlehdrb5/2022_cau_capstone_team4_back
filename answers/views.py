@@ -16,6 +16,16 @@ class AnswerViewSet(ModelViewSet):
     serializer_class = AnswerSerializer
     lookup_url_kwarg = 'answer_id'
 
+    def get_queryset(self):
+        if 'user_id' in self.kwargs:
+            user_id = self.kwargs['user_id']
+            return Answer.objects.filter(author=user_id)
+        if 'post_id' in self.kwargs:
+            post_id = self.kwargs['post_id']
+            return Answer.objects.filter(post_id=post_id)
+        else:
+            return Answer.objects.all()
+
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
