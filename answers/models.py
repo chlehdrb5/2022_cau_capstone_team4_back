@@ -9,6 +9,7 @@ class Answer(models.Model):
     post = models.ForeignKey(Post, null=True, on_delete=models.SET_NULL)
     content = models.TextField()
     head_image = models.ImageField(null=True, blank=True, upload_to='answer/images/%Y/%m/%d/')
+    file_upload = models.FileField(null=True, blank=True, upload_to='post/files/%Y/%m/%d/')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
