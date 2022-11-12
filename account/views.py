@@ -16,7 +16,7 @@ class UserViewSet(ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     lookup_url_kwarg = 'user_id'
-    permission_classes = []
+    permission_classes = []     # 후에 어드민으로 변경
 
 
 class SignupView(generics.CreateAPIView):
