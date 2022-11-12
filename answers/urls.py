@@ -1,10 +1,25 @@
 from django.urls import path
 from rest_framework.urlpatterns import format_suffix_patterns
-from .views import AnswerList, AnswerDetail
+
+from comments.views import CommentViewSet
+from .views import AnswerViewSet
 
 urlpatterns = [
-    path('', AnswerList.as_view()),
-    path('<int:pk>/', AnswerDetail.as_view()),
+    path('', AnswerViewSet.as_view(actions={
+        'get': 'list',
+    })),
+    path('<int:answer_id>', AnswerViewSet.as_view(actions={
+        'get': 'retrieve',
+        'put': 'update',
+        'delete': 'destroy'
+    })),
+    path('<int:answer_id>/like', AnswerViewSet.as_view(actions={
+        'get': 'like',
+    })),
+    path('<int:answer_id>/comments', CommentViewSet.as_view(actions={
+        'get': 'list',
+        'post': 'create'
+    })),
 ]
 
-urlpatterns = format_suffix_patterns(urlpatterns)
+# urlpatterns = format_suffix_patterns(urlpatterns)

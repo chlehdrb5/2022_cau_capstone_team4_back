@@ -136,3 +136,5 @@ admin.txt
 
 .env.prod
 .env.prod.db
+
+.ssh/
