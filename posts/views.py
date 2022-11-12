@@ -14,6 +14,13 @@ class PostViewSet(viewsets.ModelViewSet):
     #lookup_field = 'pk'
     lookup_url_kwarg = 'post_id'
 
+    def get_queryset(self):
+        if 'user_id' in self.kwargs:
+            user_id = self.kwargs['user_id']
+            return Post.objects.filter(author=user_id)
+        else:
+            return Post.objects.all()
+
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
