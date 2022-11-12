@@ -2,35 +2,29 @@ from django.urls import path
 
 
 from comments.views import CommentViewSet
+from answers.views import AnswerViewSet
 from .views import PostViewSet, TagViewSet
 
-post_list = PostViewSet.as_view({
-    'get': 'list',
-    'post': 'create'
-})
-
-post_detail = PostViewSet.as_view({
-    'get': 'retrieve',
-    'put': 'update',
-    'delete': 'destroy'
-})
-
-tag_list = TagViewSet.as_view({
-    'get': 'list'
-})
 
 urlpatterns = [
-    path('', post_list),
-    path('<int:pk>/', post_detail),
-    path('tag/', tag_list),
-    path('<int:post_pk>/comments/', CommentViewSet.as_view(actions={
+    path('', PostViewSet.as_view(actions={
         'get': 'list',
         'post': 'create'
     })),
-    path('<int:post_pk>/comment/<int:comment_pk>/', CommentViewSet.as_view(actions={
+    path('<int:post_id>', PostViewSet.as_view(actions={
         'get': 'retrieve',
         'put': 'update',
         'delete': 'destroy'
+    })),
+    path('<int:post_id>/answers', AnswerViewSet.as_view(actions={
+        'post': 'create',
+    })),
+    path('<int:post_id>/comments', CommentViewSet.as_view(actions={
+        'get': 'list',
+        'post': 'create',
+    })),
+    path('tag/', TagViewSet.as_view(actions={
+        'get': 'list',
     })),
 ]
 
