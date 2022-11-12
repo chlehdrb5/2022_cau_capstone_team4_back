@@ -27,6 +27,15 @@ class AnswerViewSet(ModelViewSet):
         else:
             return Answer.objects.all()
 
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        self.request.user.point += 10
+        self.request.user.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
         if 'post_id' in self.kwargs:
