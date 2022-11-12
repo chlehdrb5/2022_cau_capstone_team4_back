@@ -11,6 +11,8 @@ from rest_framework import viewsets
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+    #lookup_field = 'pk'
+    lookup_url_kwarg = 'post_id'
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)

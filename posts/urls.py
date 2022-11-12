@@ -17,6 +17,7 @@ urlpatterns = [
         'delete': 'destroy'
     })),
     path('<int:post_id>/answers', AnswerViewSet.as_view(actions={
+        'get': 'list',
         'post': 'create',
     })),
     path('<int:post_id>/comments', CommentViewSet.as_view(actions={
