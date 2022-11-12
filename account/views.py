@@ -3,12 +3,18 @@ from django.shortcuts import render
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.viewsets import ModelViewSet
 
 from .serializers import UserSerializer
 from .models import User
 from rest_framework import generics
 
 # Create your views here.
+
+
+class UserViewSet(ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
 
 class SignupView(generics.CreateAPIView):
@@ -27,7 +33,7 @@ class SignupView(generics.CreateAPIView):
         return Response({"Token": token.key})
 
 
-class LoginView(APIView):
+class SigninView(APIView):
     permission_classes = []
 
     def post(self, request):

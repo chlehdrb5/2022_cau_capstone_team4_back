@@ -7,24 +7,18 @@ from .views import AnswerViewSet
 urlpatterns = [
     path('', AnswerViewSet.as_view(actions={
         'get': 'list',
-        'post': 'create'
     })),
-    path('<int:pk>/', AnswerViewSet.as_view(actions={
+    path('<int:answer_id>', AnswerViewSet.as_view(actions={
         'get': 'retrieve',
         'put': 'update',
         'delete': 'destroy'
     })),
-    path('<int:pk>/like/', AnswerViewSet.as_view(actions={
+    path('<int:answer_id>/like', AnswerViewSet.as_view(actions={
         'get': 'like',
     })),
-    path('<int:answer_pk>/comments/', CommentViewSet.as_view(actions={
+    path('<int:answer_id>/comments', CommentViewSet.as_view(actions={
         'get': 'list',
         'post': 'create'
-    })),
-    path('<int:answer_pk>/comment/<int:comment_pk>/', CommentViewSet.as_view(actions={
-        'get': 'retrieve',
-        'put': 'update',
-        'delete': 'destroy'
     })),
 ]
 
