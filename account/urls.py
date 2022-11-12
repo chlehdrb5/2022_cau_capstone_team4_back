@@ -26,6 +26,9 @@ urlpatterns = [
     path('<int:user_id>/answers', AnswerViewSet.as_view(actions={
         'get': 'list',
     })),
+    path('<int:user_id>/comments', CommentViewSet.as_view(actions={
+        'get': 'list',
+    })),
     path('<int:user_id>/post/<int:post_id>/comments', CommentViewSet.as_view(actions={
         'get': 'list',
     })),
