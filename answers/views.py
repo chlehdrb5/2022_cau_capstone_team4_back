@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from django.http import Http404
 from rest_framework.viewsets import ModelViewSet
 
+from posts.models import Post
 from .serializers import AnswerSerializer
 from .models import Answer
 # Create your views here.
@@ -28,6 +29,10 @@ class AnswerViewSet(ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
+        if 'post_id' in self.kwargs:
+            post_id = self.kwargs['post_id']
+            post = Post.objects.get(id=post_id)
+            serializer.save(post=post)
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
