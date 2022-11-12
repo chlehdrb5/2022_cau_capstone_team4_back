@@ -15,9 +15,9 @@ class PostViewSet(viewsets.ModelViewSet):
     lookup_url_kwarg = 'post_id'
 
     def get_queryset(self):
-        if 'user_id' in self.kwargs:
-            user_id = self.kwargs['user_id']
-            return Post.objects.filter(author=user_id)
+        if 'username' in self.kwargs:
+            username = self.kwargs['username']
+            return Post.objects.filter(author__username=username)
         else:
             return Post.objects.all()
 

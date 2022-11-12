@@ -15,7 +15,8 @@ from rest_framework import generics
 class UserViewSet(ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    lookup_url_kwarg = 'user_id'
+    lookup_field = 'username'
+    lookup_url_kwarg = 'username'
     permission_classes = []     # 후에 어드민으로 변경
 
 

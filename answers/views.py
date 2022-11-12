@@ -18,9 +18,9 @@ class AnswerViewSet(ModelViewSet):
     lookup_url_kwarg = 'answer_id'
 
     def get_queryset(self):
-        if 'user_id' in self.kwargs:
-            user_id = self.kwargs['user_id']
-            return Answer.objects.filter(author=user_id)
+        if 'username' in self.kwargs:
+            username = self.kwargs['username']
+            return Answer.objects.filter(author__username=username)
         if 'post_id' in self.kwargs:
             post_id = self.kwargs['post_id']
             return Answer.objects.filter(post_id=post_id)
