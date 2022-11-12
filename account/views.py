@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
-from .serializers import UserSerializer
+from .serializers import UserSerializer, SigninSerializer
 from .models import User
 from rest_framework import generics
 
@@ -35,8 +35,9 @@ class SignupView(generics.CreateAPIView):
         return Response({"Token": token.key})
 
 
-class SigninView(APIView):
+class SigninView(generics.GenericAPIView):
     permission_classes = []
+    serializer_class = SigninSerializer
 
     def post(self, request):
         print(request.data)
