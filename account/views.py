@@ -15,6 +15,8 @@ from rest_framework import generics
 class UserViewSet(ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    lookup_url_kwarg = 'user_id'
+    permission_classes = []
 
 
 class SignupView(generics.CreateAPIView):

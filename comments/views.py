@@ -13,30 +13,30 @@ class CommentViewSet(ModelViewSet):
     serializer_class = CommentSerializer
 
     def get_queryset(self):
-        if 'answer_pk' in self.kwargs:
-            answer_pk = self.kwargs['answer_pk']
-            return Comment.objects.filter(answer_id=answer_pk)
-        if 'post_pk' in self.kwargs:
-            post_pk = self.kwargs['post_pk']
-            return Comment.objects.filter(post_id=post_pk)
+        if 'answer_id' in self.kwargs:
+            answer_id = self.kwargs['answer_id']
+            return Comment.objects.filter(answer_id=answer_id)
+        if 'post_id' in self.kwargs:
+            post_id = self.kwargs['post_id']
+            return Comment.objects.filter(post_id=post_id)
         else:
             return Comment.objects.all()
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
-        if 'post_pk' in self.kwargs:
-            post_pk = self.kwargs['post_pk']
-            post = Post.objects.get(id=post_pk)
+        if 'post_id' in self.kwargs:
+            post_id = self.kwargs['post_id']
+            post = Post.objects.get(id=post_id)
             serializer.save(post=post)
-        if 'answer_pk' in self.kwargs:
-            answer_pk = self.kwargs['answer_pk']
-            answer = Answer.objects.get(id=answer_pk)
+        if 'answer_id' in self.kwargs:
+            answer_id = self.kwargs['answer_id']
+            answer = Answer.objects.get(id=answer_id)
             serializer.save(answer=answer)
 
     def get_object(self):
         if self.action == 'list':
             super().get_object()
         if self.action in ['retrieve', 'update', 'destroy']:
-            comment_pk = self.kwargs['comment_pk']
-            obj = Comment.objects.get(id=comment_pk)
+            comment_id = self.kwargs['comment_id']
+            obj = Comment.objects.get(id=comment_id)
             return obj
