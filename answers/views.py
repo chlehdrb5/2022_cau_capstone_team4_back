@@ -107,8 +107,11 @@ class AnswerViewSet(ModelViewSet):
             elif post.selected == NOT_SELECTED:     # 중간 채택 하는 경우
                 answer.selected = MID_SELECTED
                 post.selected = MID_SELECTED
+            answer.author.point += post.point // 2
+            answer.author.save()
             answer.save()
             post.save()
+
             return Response({"selected": answer.selected})
         else:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
