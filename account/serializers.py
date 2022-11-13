@@ -19,7 +19,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     posts = serializers.ManyRelatedField
-    
+
     class Meta:
         model = User
         fields = ['username', 'email', 'point', ]

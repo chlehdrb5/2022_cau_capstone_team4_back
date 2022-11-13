@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 
 # Create your models here.
+from paint_int_prj.constant import *
 
 
 class UserManager(BaseUserManager):
@@ -42,7 +43,7 @@ class User(AbstractBaseUser):
     name = models.CharField(default='', max_length=20, null=False, blank=False)
     username = models.CharField(default='', max_length=100, null=False, blank=False, unique=True)
     email = models.EmailField(default='', max_length=100, null=False, blank=False, unique=True)
-    point = models.IntegerField(default=50)
+    point = models.IntegerField(default=DEFAULT_POINT)
 
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)

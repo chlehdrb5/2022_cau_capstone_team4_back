@@ -20,6 +20,9 @@ urlpatterns = [
         'get': 'list',
         'post': 'create'
     })),
+    path('<int:answer_id>/select', AnswerViewSet.as_view(actions={
+        'get': 'select',
+    })),
 ]
 
 # urlpatterns = format_suffix_patterns(urlpatterns)
