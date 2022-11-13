@@ -9,7 +9,8 @@ class AnswerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Answer
-        fields = ('id', 'post', 'file_upload', 'author', 'created_at', 'updated_at', 'selected', 'like_users')
+        fields = ('id', 'post', 'file_upload', 'author', 'created_at',
+                  'updated_at', 'selected', 'like_users', 'savedata')
 
     # def get_like_count(self, obj):
     #     return obj.like_users.count
