@@ -16,23 +16,23 @@ urlpatterns = [
     path('signup', SignupView.as_view()),
     path('signin', SigninView.as_view()),
     # path('signout', views.SignoutView.as_view()),
-    path('<int:user_id>', UserViewSet.as_view(actions={
+    path('<str:username>', UserViewSet.as_view(actions={
         'put': 'update',
         'get': 'retrieve',
     })),
-    path('<int:user_id>/posts', PostViewSet.as_view(actions={
+    path('<str:username>/posts', PostViewSet.as_view(actions={
         'get': 'list',
     })),
-    path('<int:user_id>/answers', AnswerViewSet.as_view(actions={
+    path('<str:username>/answers', AnswerViewSet.as_view(actions={
         'get': 'list',
     })),
-    path('<int:user_id>/comments', CommentViewSet.as_view(actions={
+    path('<str:username>/comments', CommentViewSet.as_view(actions={
         'get': 'list',
     })),
-    path('<int:user_id>/post/<int:post_id>/comments', CommentViewSet.as_view(actions={
+    path('<str:username>/post/<int:post_id>/comments', CommentViewSet.as_view(actions={
         'get': 'list',
     })),
-    path('<int:user_id>/answer/<int:answer_id>/comments', CommentViewSet.as_view(actions={
+    path('<str:username>/answer/<int:answer_id>/comments', CommentViewSet.as_view(actions={
         'get': 'list',
     }))
 ]

@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from django.http import Http404
 from rest_framework.viewsets import ModelViewSet
 
+from posts.models import Post
 from .serializers import AnswerSerializer
 from .models import Answer
 # Create your views here.
@@ -17,17 +18,30 @@ class AnswerViewSet(ModelViewSet):
     lookup_url_kwarg = 'answer_id'
 
     def get_queryset(self):
-        if 'user_id' in self.kwargs:
-            user_id = self.kwargs['user_id']
-            return Answer.objects.filter(author=user_id)
+        if 'username' in self.kwargs:
+            username = self.kwargs['username']
+            return Answer.objects.filter(author__username=username)
         if 'post_id' in self.kwargs:
             post_id = self.kwargs['post_id']
             return Answer.objects.filter(post_id=post_id)
         else:
             return Answer.objects.all()
 
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        self.request.user.point += 10
+        self.request.user.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
+        if 'post_id' in self.kwargs:
+            post_id = self.kwargs['post_id']
+            post = Post.objects.get(id=post_id)
+            serializer.save(post=post)
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()

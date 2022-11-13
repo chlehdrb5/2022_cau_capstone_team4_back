@@ -14,15 +14,15 @@ class CommentViewSet(ModelViewSet):
     lookup_url_kwarg = 'comment_id'
 
     def get_queryset(self):
-        if 'user_id' in self.kwargs:
-            user_id = self.kwargs['user_id']
+        if 'username' in self.kwargs:
+            username = self.kwargs['username']
             if 'answer_id' in self.kwargs:
                 answer_id = self.kwargs['answer_id']
-                return Comment.objects.filter(answer_id=answer_id, author=user_id)
+                return Comment.objects.filter(answer_id=answer_id, author__username=username)
             if 'post_id' in self.kwargs:
                 post_id = self.kwargs['post_id']
-                return Comment.objects.filter(post_id=post_id, author=user_id)
-            return Comment.objects.filter(author=user_id)
+                return Comment.objects.filter(post_id=post_id, author__username=username)
+            return Comment.objects.filter(author__username=username)
         if 'answer_id' in self.kwargs:
             answer_id = self.kwargs['answer_id']
             return Comment.objects.filter(answer_id=answer_id)

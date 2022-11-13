@@ -14,10 +14,8 @@ class Tag(models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=50)
-    content = models.TextField()
-
-    head_image = models.ImageField(null=True, blank=True, upload_to='post/images/%Y/%m/%d/')
-    file_upload = models.FileField(null=True, blank=True, upload_to='post/files/%Y/%m/%d/')
+    content = models.TextField(null=False)
+    file_upload = models.TextField(null=False)     # img 파일
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
