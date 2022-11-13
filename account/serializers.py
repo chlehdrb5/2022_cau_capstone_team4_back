@@ -2,7 +2,7 @@ from .models import User
 from rest_framework import serializers
 
 
-class UserSerializer(serializers.ModelSerializer):
+class UserCreateSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = User.objects.create_user(
             name=validated_data['name'],
@@ -14,7 +14,15 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['name', 'username', 'email', 'password', 'point']
+        fields = ['name', 'username', 'email', 'password']
+
+
+class UserSerializer(serializers.ModelSerializer):
+    posts = serializers.ManyRelatedField
+    
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'point', ]
 
 
 class SigninSerializer(serializers.ModelSerializer):
