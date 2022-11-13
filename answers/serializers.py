@@ -12,6 +12,5 @@ class AnswerSerializer(serializers.ModelSerializer):
         fields = ('id', 'post', 'file_upload', 'author', 'created_at',
                   'updated_at', 'selected', 'like_users', 'savedata')
         read_only_fields = ('selected', 'like_users')
-
     # def get_like_count(self, obj):
     #     return obj.like_users.count

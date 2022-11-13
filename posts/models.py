@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 from account.models import User
+from paint_int_prj.constant import *
 
 
 class Tag(models.Model):
@@ -22,6 +23,8 @@ class Post(models.Model):
 
     author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     tag = models.ManyToManyField(Tag, blank=True)
+
+    selected = models.IntegerField(default=NOT_SELECTED)
 
     def __str__(self):
         return f'[{self.pk}] {self.title}'
