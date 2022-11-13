@@ -29,13 +29,31 @@ class AnswerViewSet(ModelViewSet):
             return Answer.objects.all()
 
     def create(self, request, *args, **kwargs):
+        post = Post.objects.get(id=self.kwargs['post_id'])
+        # print(f"Test : {post}")
+        if post.selected == FINAL_SELECTED:
+            return Response({"Error": "최종 채택이 완료된 게시글에는 답변을 작성할 수 없습니다.."}, status=status.HTTP_400_BAD_REQUEST)
+        elif post.selected == MID_SELECTED:
+            mid_selected_answer = post.answer_set.filter(selected=MID_SELECTED)[0]
+            if request.user != mid_selected_answer.author:
+                return Response({"Error": "중간 채택된 답변의 작성자만 답변을 작성할 수 있습니다."}, status=status.HTTP_400_BAD_REQUEST)
+
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
         self.request.user.point += ANSWER_POINT
         self.request.user.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+        new_data = dict(serializer.data)
+        if post.selected == MID_SELECTED:   # 새롭게 작성된 answer가 중간 채택인 상태로 만들기
+            answer_id = serializer.data['id']
+            created_answer = Answer.objects.get(id=answer_id)
+            created_answer.selected = MID_SELECTED
+            created_answer.save()
+            new_data['selected'] = MID_SELECTED
+
+        return Response(new_data, status=status.HTTP_201_CREATED, headers=headers)
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
