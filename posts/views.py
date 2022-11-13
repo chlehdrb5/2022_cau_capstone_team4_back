@@ -35,7 +35,13 @@ class PostViewSet(viewsets.ModelViewSet):
         headers = self.get_success_headers(serializer.data)
         self.request.user.point -= post_point
         self.request.user.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+        new_data = dict(serializer.data)
+        post = Post.objects.get(id=serializer.data['id'])
+        post.thumbnail = post.file_upload
+        post.save()
+        new_data['thumbnail'] = post.thumbnail
+        return Response(new_data, status=status.HTTP_201_CREATED, headers=headers)
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
@@ -45,7 +51,7 @@ class PostViewSet(viewsets.ModelViewSet):
         if post.answer_set:
             return Response({"Error": "답변이 작성된 게시글은 삭제할 수 없습니다."}, status=status.HTTP_400_BAD_REQUEST)
         return super().destroy(request, *args, **kwargs)
-    
+
     def update(self, request, *args, **kwargs):
         post = self.get_object()
         if post.answer_set:

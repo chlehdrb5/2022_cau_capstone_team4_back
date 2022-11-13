@@ -99,7 +99,7 @@ class AnswerViewSet(ModelViewSet):
             if post.selected == FINAL_SELECTED:
                 return Response({"Error": "이미 채택이 완료된 게시글입니다."}, status=status.HTTP_400_BAD_REQUEST)
             elif post.selected == MID_SELECTED:     # 최종 채택을 하는 경우
-                mid_selected_answer = post.answer_set.get(selected=MID_SELECTED)
+                mid_selected_answer = post.answer_set.filter(selected=MID_SELECTED)[0]
                 if answer.author != mid_selected_answer.author:
                     return Response({"Error": "중간 채택된 답변의 작성자와 일치하지 않는 답변입니다."}, status=status.HTTP_400_BAD_REQUEST)
                 answer.selected = FINAL_SELECTED
@@ -110,6 +110,7 @@ class AnswerViewSet(ModelViewSet):
             answer.author.point += post.point // 2
             answer.author.save()
             answer.save()
+            post.thumbnail = answer.file_upload
             post.save()
 
             return Response({"selected": answer.selected})

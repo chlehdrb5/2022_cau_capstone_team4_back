@@ -27,5 +27,7 @@ class Post(models.Model):
     selected = models.IntegerField(default=NOT_SELECTED)
     point = models.IntegerField(default=DEFAULT_POST_POINT)
 
+    thumbnail = models.TextField(null=True)
+
     def __str__(self):
         return f'[{self.pk}] {self.title}'
