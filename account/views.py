@@ -5,7 +5,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
-from .serializers import UserSerializer
+from paint_int_prj.permissions import IsOwnerOrReadOnlyForUser
+from .serializers import UserSerializer, SigninSerializer, UserCreateSerializer
 from .models import User
 from rest_framework import generics
 
@@ -17,12 +18,12 @@ class UserViewSet(ModelViewSet):
     serializer_class = UserSerializer
     lookup_field = 'username'
     lookup_url_kwarg = 'username'
-    permission_classes = []     # 후에 어드민으로 변경
+    permission_classes = [IsOwnerOrReadOnlyForUser]     # 후에 어드민으로 변경
 
 
 class SignupView(generics.CreateAPIView):
     queryset = User.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = UserCreateSerializer
     permission_classes = []
 
     def create(self, request, *args, **kwargs):
@@ -36,8 +37,9 @@ class SignupView(generics.CreateAPIView):
         return Response({"Token": token.key})
 
 
-class SigninView(APIView):
+class SigninView(generics.GenericAPIView):
     permission_classes = []
+    serializer_class = SigninSerializer
 
     def post(self, request):
         print(request.data)
