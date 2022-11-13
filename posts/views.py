@@ -40,6 +40,18 @@ class PostViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
+    def destroy(self, request, *args, **kwargs):
+        post = self.get_object()
+        if post.answer_set:
+            return Response({"Error": "답변이 작성된 게시글은 삭제할 수 없습니다."}, status=status.HTTP_400_BAD_REQUEST)
+        return super().destroy(request, *args, **kwargs)
+    
+    def update(self, request, *args, **kwargs):
+        post = self.get_object()
+        if post.answer_set:
+            return Response({"Error": "답변이 작성된 게시글은 수정할 수 없습니다."}, status=status.HTTP_400_BAD_REQUEST)
+        return super().update(request, *args, **kwargs)
+
 
 class TagViewSet(viewsets.ModelViewSet):
     queryset = Tag.objects.all()
