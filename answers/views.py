@@ -71,6 +71,7 @@ class AnswerViewSet(ModelViewSet):
         if request.user.is_authenticated:
             if answer.like_users.filter(pk=request.user.pk).exists():
                 serializer_data_["is_liked"] = True
+        serializer_data_["like_count"] = answer.like_users.count()
         print(serializer_data_)
         return Response(serializer_data_)
 
