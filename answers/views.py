@@ -45,15 +45,7 @@ class AnswerViewSet(ModelViewSet):
         self.request.user.point += ANSWER_POINT
         self.request.user.save()
 
-        new_data = dict(serializer.data)
-        if post.selected == MID_SELECTED:   # 새롭게 작성된 answer가 중간 채택인 상태로 만들기
-            answer_id = serializer.data['id']
-            created_answer = Answer.objects.get(id=answer_id)
-            created_answer.selected = MID_SELECTED
-            created_answer.save()
-            new_data['selected'] = MID_SELECTED
-
-        return Response(new_data, status=status.HTTP_201_CREATED, headers=headers)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
@@ -61,19 +53,8 @@ class AnswerViewSet(ModelViewSet):
             post_id = self.kwargs['post_id']
             post = Post.objects.get(id=post_id)
             serializer.save(post=post)
-
-    def retrieve(self, request, *args, **kwargs):
-        instance = self.get_object()
-        serializer = self.get_serializer(instance)
-        serializer_data_ = dict(serializer.data)
-        serializer_data_["is_liked"] = False
-        answer = self.get_object()
-        if request.user.is_authenticated:
-            if answer.like_users.filter(pk=request.user.pk).exists():
-                serializer_data_["is_liked"] = True
-        serializer_data_["like_count"] = answer.like_users.count()
-        print(serializer_data_)
-        return Response(serializer_data_)
+            if post.selected == MID_SELECTED:
+                serializer.save(selected=MID_SELECTED)
 
     def like(self, request, *args, **kwargs):
         answer = self.get_object()
