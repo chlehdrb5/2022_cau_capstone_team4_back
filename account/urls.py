@@ -8,9 +8,9 @@ from rest_framework import urls
 
 urlpatterns = [
     # path('api-auth/', include('rest_framework.urls')),
-    path('',        UserViewSet.as_view(actions={         # users
-        'get': 'list',
-    })),
+    # path('',        UserViewSet.as_view(actions={         # users
+    #     'get': 'list',
+    # })),
 
     # user/
     path('signup', SignupView.as_view()),

@@ -6,10 +6,6 @@ from answers.views import AnswerViewSet
 from .views import PostViewSet, TagViewSet, MainPageViewSet
 
 urlpatterns = [
-    path('', PostViewSet.as_view(actions={
-        'get': 'list',
-        'post': 'create'
-    })),
     path('<int:post_id>', PostViewSet.as_view(actions={
         'get': 'retrieve',
         'put': 'update',
@@ -22,9 +18,6 @@ urlpatterns = [
     path('<int:post_id>/comments', CommentViewSet.as_view(actions={
         'get': 'list',
         'post': 'create',
-    })),
-    path('main', MainPageViewSet.as_view(actions={
-        'get': 'list',
     })),
     path('tag/', TagViewSet.as_view(actions={
         'get': 'list',
