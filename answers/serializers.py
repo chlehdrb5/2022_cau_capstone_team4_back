@@ -5,8 +5,8 @@ from .models import Answer
 
 
 class AnswerSerializer(serializers.ModelSerializer):
-    author = serializers.ReadOnlyField(source='author.name')
-    post = serializers.ReadOnlyField(source='post.id')
+    # author = serializers.ReadOnlyField(source='author.name')
+    # post = serializers.ReadOnlyField(source='post.id')
     is_liked = serializers.SerializerMethodField()
     like_count = serializers.SerializerMethodField()
 
