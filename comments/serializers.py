@@ -3,7 +3,7 @@ from .models import Comment
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    # author = serializers.ReadOnlyField(source='author.name')
+    author = serializers.ReadOnlyField(source='author.name')
     # post = serializers.ReadOnlyField(source='post.id')
     # answer = serializers.ReadOnlyField(source='answer.id')
 
