@@ -9,6 +9,7 @@ from rest_framework.viewsets import ModelViewSet
 
 from paint_int_prj.constant import *
 from posts.models import Post
+from posts.serializers import PostSerializer
 from .serializers import AnswerSerializer
 from .models import Answer
 # Create your views here.
@@ -102,7 +103,7 @@ class AnswerViewSet(ModelViewSet):
 
 
 class AnswerRankViewSet(ModelViewSet):
-    serializer_class = AnswerSerializer
+    serializer_class = PostSerializer
 
     def get_queryset(self):
         answers = Answer.objects.filter(selected=FINAL_SELECTED).annotate(like_cnt=Count('like_users')).order_by('-like_cnt')[:9]
