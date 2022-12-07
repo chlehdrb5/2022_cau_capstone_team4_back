@@ -105,8 +105,12 @@ class AnswerViewSet(ModelViewSet):
 
 class AnswerRankViewSet(ModelViewSet):
     serializer_class = PostSerializer
+    queryset = Post.objects.all()
 
-    def get_queryset(self):
+    def list(self, request, *args, **kwargs):
         answers = Answer.objects.filter(selected=FINAL_SELECTED).annotate(like_cnt=Count('like_users')).order_by('-like_cnt')[:9]
         posts = [ans.post.id for ans in answers]
-        return Post.objects.filter(id__in=posts)
+        res = []
+        for i in range(len(posts)):
+            res.append(PostSerializer(Post.objects.get(id=posts[i])).data)
+        return Response(res)
