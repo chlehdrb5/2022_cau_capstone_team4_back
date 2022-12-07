@@ -98,3 +98,10 @@ class AnswerViewSet(ModelViewSet):
             return Response({"selected": answer.selected})
         else:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+
+class AnswerRankViewSet(ModelViewSet):
+    serializer_class = AnswerSerializer
+
+    def get_queryset(self):
+        return Answer.objects.all().order_by('-like_users')[:9]

@@ -2,7 +2,7 @@ from django.urls import path
 from rest_framework.urlpatterns import format_suffix_patterns
 
 from comments.views import CommentViewSet
-from .views import AnswerViewSet
+from .views import AnswerViewSet, AnswerRankViewSet
 
 urlpatterns = [
     path('<int:answer_id>', AnswerViewSet.as_view(actions={
@@ -19,6 +19,9 @@ urlpatterns = [
     })),
     path('<int:answer_id>/select', AnswerViewSet.as_view(actions={
         'get': 'select',
+    })),
+    path('rank', AnswerRankViewSet.as_view(actions={
+        'get': 'list',
     })),
 ]
 
