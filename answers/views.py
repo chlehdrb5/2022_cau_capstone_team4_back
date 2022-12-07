@@ -1,4 +1,4 @@
-from django.db.models import Count
+from django.db.models import Count, QuerySet
 from django.shortcuts import render
 
 from rest_framework import status
@@ -105,4 +105,6 @@ class AnswerRankViewSet(ModelViewSet):
     serializer_class = AnswerSerializer
 
     def get_queryset(self):
-        return Answer.objects.all().annotate(like_cnt=Count('like_users')).order_by('-like_cnt')[:9]
+        answers = Answer.objects.filter(selected=FINAL_SELECTED).annotate(like_cnt=Count('like_users')).order_by('-like_cnt')[:9]
+        posts = [ans.post.id for ans in answers]
+        return Post.objects.filter(id__in=posts)
