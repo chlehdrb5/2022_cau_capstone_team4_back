@@ -19,17 +19,33 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+from account.views import UserViewSet
+from answers.views import AnswerViewSet
+from comments.views import CommentViewSet
+from posts.views import PostViewSet, MainPageViewSet
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('users', include('account.urls')),
     path('user/', include('account.urls')),
-    path('answers', include('answers.urls')),
     path('answer/', include('answers.urls')),
-    path('posts', include('posts.urls')),
     path('post/', include('posts.urls')),
-    path('comments', include('comments.urls')),
     path('comment/', include('comments.urls')),
+    path('main', MainPageViewSet.as_view(actions={
+        'get': 'list',
+    })),
+    path('users', UserViewSet.as_view(actions={
+        'get': 'list',
+    })),
+    path('posts', PostViewSet.as_view(actions={
+        'get': 'list',
+        'post': 'create'
+    })),
+    path('comments', CommentViewSet.as_view(actions={
+        'get': 'list',
+    })),
+    path('answers', AnswerViewSet.as_view(actions={
+        'get': 'list',
+    })),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

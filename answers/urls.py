@@ -5,9 +5,6 @@ from comments.views import CommentViewSet
 from .views import AnswerViewSet
 
 urlpatterns = [
-    path('', AnswerViewSet.as_view(actions={
-        'get': 'list',
-    })),
     path('<int:answer_id>', AnswerViewSet.as_view(actions={
         'get': 'retrieve',
         'put': 'update',

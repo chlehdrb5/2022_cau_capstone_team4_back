@@ -9,7 +9,7 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
         fields = ('id', 'title', 'content', 'tag', 'file_upload',
                   'author', 'created_at', 'updated_at', 'selected', 'point', 'thumbnail')
-        read_only_fields = ('selected', 'thumbnail')
+        read_only_fields = ('selected', 'thumbnail', 'author')
 
 
 class TagSerializer(serializers.ModelSerializer):

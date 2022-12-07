@@ -38,7 +38,7 @@ class PostViewSet(viewsets.ModelViewSet):
         if 'point' not in request.data or not request.data['point']:
             post_point = DEFAULT_POST_POINT
         else:
-            post_point = request.data['point']
+            post_point = int(request.data['point'])
         if post_point > self.request.user.point:
             return Response({"Error": "포인트가 부족합니다."}, status=status.HTTP_400_BAD_REQUEST)
         serializer = self.get_serializer(data=request.data)

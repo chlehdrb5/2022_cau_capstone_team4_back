@@ -42,6 +42,7 @@ class CommentViewSet(ModelViewSet):
             answer_id = self.kwargs['answer_id']
             answer = Answer.objects.get(id=answer_id)
             serializer.save(answer=answer)
+            # serializer.save(post=answer.post)
 
     def get_object(self):
         if self.action == 'list':

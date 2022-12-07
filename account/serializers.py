@@ -22,7 +22,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['name', 'username', 'email', 'point']
+        fields = ['name', 'username', 'email', 'point', 'cumul_point', ]
 
 
 class SigninSerializer(serializers.ModelSerializer):
