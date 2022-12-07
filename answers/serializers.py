@@ -9,6 +9,7 @@ class AnswerSerializer(serializers.ModelSerializer):
     # post = serializers.ReadOnlyField(source='post.id')
     is_liked = serializers.SerializerMethodField()
     like_count = serializers.SerializerMethodField()
+    cumul_point = serializers.SerializerMethodField()
 
     def get_is_liked(self, obj):
         request = self.context['request']
@@ -19,8 +20,11 @@ class AnswerSerializer(serializers.ModelSerializer):
     def get_like_count(self, obj):
         return obj.like_users.count()
 
+    def get_cumul_point(self, obj):
+        return obj.author.cumul_point
+
     class Meta:
         model = Answer
         fields = ('id', 'post', 'file_upload', 'author', 'created_at',
-                  'updated_at', 'selected', 'savedata', 'is_liked', 'like_count')
-        read_only_fields = ('selected', 'post', 'author')
+                  'updated_at', 'selected', 'savedata', 'is_liked', 'like_count', 'cumul_point')
+        read_only_fields = ('selected', 'post', 'author', 'cumul_point')
