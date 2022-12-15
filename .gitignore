@@ -138,3 +138,6 @@ admin.txt
 .env.prod.db
 
 .ssh/
+
+static/
+secrets.json
