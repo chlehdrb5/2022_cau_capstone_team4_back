@@ -45,6 +45,10 @@
 ## DB 스키마
 <img src="https://user-images.githubusercontent.com/39735744/216561723-5c24110b-e477-4938-ab1a-0860611f6425.png" width="500"/>
 
+## API
+![image](https://user-images.githubusercontent.com/39735744/216579049-7dfb01e4-8098-4de5-91f3-ef8ff10cd1d4.png)
+![image](https://user-images.githubusercontent.com/39735744/216579473-8b66e392-585f-4603-92f5-0b2b9236c503.png)
+
 ## 기능 설명
 <img src="https://user-images.githubusercontent.com/39735744/216563407-9481f8d9-7f18-4633-a4b8-17c0f4a4a1a5.png" width="500"/>
 
