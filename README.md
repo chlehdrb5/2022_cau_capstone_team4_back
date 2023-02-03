@@ -26,9 +26,9 @@
 ## :two_men_holding_hands: 팀 구성
 - Prof  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : 김은우
 - Mentor &nbsp; : 노창석
-- Member : 김경훈
-- Member : 이석민
-- Member : 최동규
+- Member : 김경훈 (Front)
+- Member : 이석민 (Back)
+- Member : 최동규 (Back)
 
 ## 서비스 전체 흐름도
 <img src="https://user-images.githubusercontent.com/39735744/216564970-975b2f09-caab-4eb6-8680-6f1469cb61cd.png" width="500"/>
